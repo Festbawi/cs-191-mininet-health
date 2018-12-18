@@ -8,25 +8,6 @@ from mininet.log import output
 def _getLinkNodeNames( link ):
     return '%s-%s' % ( link.intf1.node.name, link.intf2.node.name )
 
-# https://stackoverflow.com/questions/312443/how-do-you-split-a-list-into-evenly-sized-chunks
-def _splitIntoChunks(l, n):
-    """Yield successive n-sized chunks from l."""
-    for i in xrange(0, len(l), n):
-        yield l[i:i + n]
-
-def _catNetDetails(l, n = 5):
-    chunks = list(_splitIntoChunks(l, n))
-    return '\n\t'.join(map('\t'.join, chunks))
-
-
-def getNetDetails( net ):
-    output = 'Network details:\n'
-    output += 'Controller(s):\n\t%s\n' % _catNetDetails([controller.name for controller in net.controllers])
-    output += '\nHost(s):\n\t%s\n' % _catNetDetails([host.name for host in net.hosts])
-    output += '\nSwitch(es):\n\t%s\n' % _catNetDetails([switch.name for switch in net.switches])
-    output += '\nLink(s):\n\t%s\n\n' % _catNetDetails([_getLinkNodeNames(link) for link in net.links])
-    return output
-
 # Based on mininet/net.py's Mininet.ping()
 def _ping( net, hosts=None, timeout=None ):
         packets = 0
@@ -109,10 +90,12 @@ def checkAvailableRouteIfLinkDown( net, minCombinations=1, maxCombinations=1, pi
         yield _changeLinkStatus( link.intf2, 'up' )
     
     # yield '\n*** Node Connectivity when Links are Down (combinations from %d to %d):' % ( minCombinations, maxCombinations )
-    yield '\n* Links down: None\n'
+    yield '* Links down: None\n'
     for message in _ping(net, None, pingTimeout):
         yield message
-    
+
+    yield '\n'
+
     for combiLength in range(minCombinations, maxCombinations + 1):
         combinations = itertools.combinations( links, combiLength )
         for i, combination in enumerate( combinations ):
@@ -125,7 +108,7 @@ def checkAvailableRouteIfLinkDown( net, minCombinations=1, maxCombinations=1, pi
                 yield _changeLinkStatus( link.intf2, 'down' )
         
             # Check if all connections still work
-            yield '\n* Links down: %s\n' % ', '.join( combinationNames )
+            yield '* Links down: %s\n' % ', '.join( combinationNames )
             for message in _ping(net, None, pingTimeout):
                 yield message
         
@@ -133,3 +116,5 @@ def checkAvailableRouteIfLinkDown( net, minCombinations=1, maxCombinations=1, pi
             for link in combination:
                 yield _changeLinkStatus( link.intf1, 'up' )
                 yield _changeLinkStatus( link.intf2, 'up' )
+
+            yield '\n'
