@@ -41,13 +41,24 @@ function ajaxStream(url, resultDiv) {
 }
 
 function onLoad() {
+    var adjOpenBtn = document.getElementById('adj-modal-open');
+    var adjCloseBtn = document.getElementById('adj-modal-close');
+    adjOpenBtn.addEventListener("click", function() {
+        document.getElementById("adj-modal").style.display = "";
+    });
+    adjCloseBtn.addEventListener("click", function() {
+        document.getElementById("adj-modal").style.display = "none";
+    });
+
     var verifyBtn = document.getElementById('verify-btn');
     var resultDiv = document.getElementById('result-div');
-    verifyBtn.onclick = function() {
-        console.log('Verify button pressed');
-        resultDiv.innerHTML = resultDiv.getAttribute('original-content');
-        ajaxStream('/verify', resultDiv);
-    }
+    var resultPre = document.getElementById('result-pre');
+    verifyBtn.addEventListener("click", function() {
+        resultDiv.style.display = "";
+        resultPre.innerHTML = '';
+        window.scrollTo(0, document.body.scrollHeight);
+        ajaxStream('/verify', resultPre);
+    });
 }
 
 window.onload = onLoad
