@@ -31,3 +31,9 @@ Then, just execute the script:
 ```shell
 sudo python demo.py
 ```
+
+Don't forget to start the controller as well. You could run POX's sample learning switch:
+```shell
+cd ~/pox
+./pox.py forwarding.l2_learning
+```

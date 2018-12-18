@@ -24,11 +24,6 @@ function ajaxStream(url, resultDiv) {
                             continue;
                         }
                         var result = JSON.parse(newResponses[i]);
-                        console.log(result);
-                        // resultDiv.innerHTML += '<div class="siimple-box-' + result.type + '">' + result.message + '</div>';
-                        // if (/\r|\n/.exec(result.message)) {
-                        //     resultDiv.innerHTML += '<br/>';
-                        // }
                         resultDiv.innerHTML += result;
                     }
                     xhr.previousText = xhr.responseText;

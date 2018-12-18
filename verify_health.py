@@ -27,7 +27,7 @@ def getNetDetails( net ):
     output += '\nLink(s):\n\t%s\n\n' % _catNetDetails([_getLinkNodeNames(link) for link in net.links])
     return output
 
-# Based on net.py's Mininet.ping()
+# Based on mininet/net.py's Mininet.ping()
 def _ping( net, hosts=None, timeout=None ):
         packets = 0
         lost = 0

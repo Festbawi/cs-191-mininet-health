@@ -1,7 +1,7 @@
 #!/usr/bin/python
 from mininet.net import Mininet
 from mininet.node import OVSSwitch, RemoteController
-from mininet.topo import LinearTopo, SingleSwitchTopo, Topo
+from mininet.topo import MinimalTopo
 from mininet.topolib import TreeTopo, TorusTopo
 
 from mininet_bottle import MininetVerifyHealth
