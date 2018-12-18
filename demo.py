@@ -6,8 +6,7 @@ from mininet.topolib import TreeTopo, TorusTopo
 
 from mininet_bottle import MininetVerifyHealth
 
-# topo = SingleSwitchTopo( 3 )
-topo = TreeTopo( 3, 2 )
+topo = MinimalTopo()
 
 net = Mininet( topo=topo, switch=OVSSwitch, controller=[RemoteController], autoSetMacs=True )
 net.start()
@@ -15,6 +14,6 @@ net.start()
 net.waitConnected()
 
 mininetBottle = MininetVerifyHealth( net )
-mininetBottle.run( server='gevent', host='0.0.0.0', port='8080' )
+mininetBottle.run( host='0.0.0.0', port='8080', server='gevent' )
 
 net.stop()
